@@ -153,6 +153,12 @@ variable "cloudwatch_log_retention" {
   default     = 365
 }
 
+variable "cloudwatch_log_kms_key_id" {
+  description = "The ARN of the KMS key to use when encrypting log data."
+  type        = string
+  default     = null
+}
+
 variable "node_to_node_encryption" {
   description = "Enable node-to-node encryption."
   type        = bool

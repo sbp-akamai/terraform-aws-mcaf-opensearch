@@ -1,21 +1,25 @@
 resource "aws_cloudwatch_log_group" "cw_index" {
   retention_in_days = var.cloudwatch_log_retention
   name              = "${var.cluster_name}/index_slow_logs"
+  kms_key_id        = var.cloudwatch_log_kms_key_id
 }
 
 resource "aws_cloudwatch_log_group" "cw_search" {
   retention_in_days = var.cloudwatch_log_retention
   name              = "${var.cluster_name}/search_slow_logs"
+  kms_key_id        = var.cloudwatch_log_kms_key_id
 }
 
 resource "aws_cloudwatch_log_group" "cw_application" {
   retention_in_days = var.cloudwatch_log_retention
   name              = "${var.cluster_name}/application_logs"
+  kms_key_id        = var.cloudwatch_log_kms_key_id
 }
 
 resource "aws_cloudwatch_log_group" "cw_audit" {
   retention_in_days = var.cloudwatch_log_retention
   name              = "${var.cluster_name}/audit_logs"
+  kms_key_id        = var.cloudwatch_log_kms_key_id
 }
 
 data "aws_iam_policy_document" "cw_policy" {
