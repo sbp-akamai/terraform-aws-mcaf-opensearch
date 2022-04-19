@@ -21,6 +21,30 @@ resource "aws_elasticsearch_domain" "opensearch" {
     }
   }
 
+  log_publishing_options {
+    enabled                  = var.cloudwatch_log_enabled
+    cloudwatch_log_group_arn = aws_cloudwatch_log_group.cw_index.arn
+    log_type                 = "INDEX_SLOW_LOGS"
+  }
+
+  log_publishing_options {
+    enabled                  = var.cloudwatch_log_enabled
+    cloudwatch_log_group_arn = aws_cloudwatch_log_group.cw_search.arn
+    log_type                 = "SEARCH_SLOW_LOGS"
+  }
+
+  log_publishing_options {
+    enabled                  = var.cloudwatch_log_enabled
+    cloudwatch_log_group_arn = aws_cloudwatch_log_group.cw_application.arn
+    log_type                 = "ES_APPLICATION_LOGS"
+  }
+
+  log_publishing_options {
+    enabled                  = var.cloudwatch_log_enabled
+    cloudwatch_log_group_arn = aws_cloudwatch_log_group.cw_audit.arn
+    log_type                 = "AUDIT_LOGS"
+  }
+
   advanced_security_options {
     enabled                        = true
     internal_user_database_enabled = false
@@ -30,16 +54,17 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
 
   node_to_node_encryption {
-    enabled = true
+    enabled = var.node_to_node_encryption
   }
 
   encrypt_at_rest {
-    enabled    = true
-    kms_key_id = var.encrypt_kms_key_id
+    enabled    = var.encrypt_at_rest
+    kms_key_id = var.encrypt_at_rest ? var.encrypt_kms_key_id : null
   }
 
   vpc_options {
-    subnet_ids = var.subnet_ids
+    subnet_ids         = var.subnet_ids
+    security_group_ids = var.security_group_ids
   }
 
   ebs_options {
@@ -53,6 +78,13 @@ resource "aws_elasticsearch_domain" "opensearch" {
     custom_endpoint_enabled         = var.custom_endpoint_enabled
     custom_endpoint                 = var.custom_endpoint_enabled ? var.custom_endpoint : null
     custom_endpoint_certificate_arn = var.custom_endpoint_enabled ? var.custom_endpoint_certificate_arn : null
+  }
+
+  cognito_options {
+    enabled          = var.cognito_enabled
+    user_pool_id     = var.cognito_enabled ? var.cognito_user_pool_id : ""
+    identity_pool_id = var.cognito_enabled ? var.cognito_identity_pool_id : ""
+    role_arn         = var.cognito_enabled ? var.cognito_role_arn : ""
   }
 
   tags = var.tags

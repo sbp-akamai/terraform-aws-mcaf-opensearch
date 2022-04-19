@@ -1,5 +1,11 @@
 output "opensearch_domain_arn" {
-  value = aws_elasticsearch_domain.opensearch.arn
+  description = "Return ARN of the OpenSearch cluster domain."
+  value       = aws_elasticsearch_domain.opensearch.arn
+}
+
+output "opensearch_domain_id" {
+  description = "The domain id of the OpenSearch cluster."
+  value       = aws_elasticsearch_domain.opensearch.id
 }
 
 output "cluster_name" {
@@ -7,14 +13,14 @@ output "cluster_name" {
   value       = aws_elasticsearch_domain.opensearch.domain_name
 }
 
-output "cluster_version" {
-  description = "The version of the OpenSearch cluster."
-  value       = replace(aws_elasticsearch_domain.opensearch.elasticsearch_version, "OpenSearch_", "")
-}
-
 output "cluster_endpoint" {
   description = "The endpoint URL of the OpenSearch cluster."
   value       = aws_elasticsearch_domain.opensearch.endpoint
+}
+
+output "cluster_version" {
+  description = "The version of the OpenSearch cluster."
+  value       = replace(aws_elasticsearch_domain.opensearch.elasticsearch_version, "OpenSearch_", "")
 }
 
 output "kibana_endpoint" {

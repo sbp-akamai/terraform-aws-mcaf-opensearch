@@ -88,6 +88,12 @@ variable "subnet_ids" {
   default     = []
 }
 
+variable "security_group_ids" {
+  description = "List of VPC security group id's."
+  type        = list(string)
+  default     = []
+}
+
 variable "enforce_https" {
   description = "Enforce HTTPS domain endpoint."
   type        = string
@@ -131,6 +137,60 @@ variable "master_user_arn" {
 
 variable "encrypt_kms_key_id" {
   description = "KMS key id to encrypt OpenSearch domain with."
+  type        = string
+  default     = null
+}
+
+variable "cloudwatch_log_enabled" {
+  description = "Enabled Cloudwatch."
+  type        = bool
+  default     = true
+}
+
+variable "cloudwatch_log_retention" {
+  description = "Cloudwatch log retention in days."
+  type        = number
+  default     = 365
+}
+
+variable "cloudwatch_log_kms_key_id" {
+  description = "The ARN of the KMS key to use when encrypting log data."
+  type        = string
+  default     = null
+}
+
+variable "node_to_node_encryption" {
+  description = "Enable node-to-node encryption."
+  type        = bool
+  default     = true
+}
+
+variable "encrypt_at_rest" {
+  description = "Enable encryption at rest"
+  type        = bool
+  default     = true
+}
+
+variable "cognito_enabled" {
+  description = "Enable AWS cognito for OpenSearch."
+  type        = bool
+  default     = false
+}
+
+variable "cognito_user_pool_id" {
+  description = "ID of the Cognito user pool to use."
+  type        = string
+  default     = null
+}
+
+variable "cognito_identity_pool_id" {
+  description = "ID of the Cognito identity pool to use."
+  type        = string
+  default     = null
+}
+
+variable "cognito_role_arn" {
+  description = "ARN of the IAM role that has the AmazonESCognitoAccess policy."
   type        = string
   default     = null
 }
