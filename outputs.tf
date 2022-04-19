@@ -1,9 +1,11 @@
 output "opensearch_domain_arn" {
-  value = aws_elasticsearch_domain.opensearch.arn
+  description = "Return ARN of the OpenSearch cluster domain."
+  value       = aws_elasticsearch_domain.opensearch.arn
 }
 
 output "opensearch_domain_id" {
-  value = aws_elasticsearch_domain.opensearch.id
+  description = "The domain id of the OpenSearch cluster."
+  value       = aws_elasticsearch_domain.opensearch.id
 }
 
 output "cluster_name" {
@@ -24,12 +26,4 @@ output "cluster_version" {
 output "kibana_endpoint" {
   description = "The endpoint URL of Kibana."
   value       = aws_elasticsearch_domain.opensearch.kibana_endpoint
-}
-
-output "vpc_options_availability_zones" {
-  value = aws_elasticsearch_domain.opensearch.vpc_options.0.availability_zones
-}
-
-output "vpc_options_vpc_id" {
-  value = aws_elasticsearch_domain.opensearch.vpc_options.0.vpc_id
 }
