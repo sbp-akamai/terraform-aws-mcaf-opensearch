@@ -70,6 +70,8 @@ resource "aws_elasticsearch_domain" "opensearch" {
   ebs_options {
     ebs_enabled = var.ebs_enabled
     volume_size = var.ebs_enabled ? var.ebs_volume_size : null
+    volume_type = var.ebs_enabled ? var.ebs_volume_type : null
+    iops        = var.ebs_enabled ? var.ebs_iops : null
   }
 
   domain_endpoint_options {
