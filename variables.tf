@@ -70,9 +70,20 @@ variable "ebs_enabled" {
   default     = false
 }
 
+variable "ebs_iops" {
+  description = "Baseline I/O performance of EBS volumes attached to data nodes."
+  type        = number
+  default     = null
+}
 variable "ebs_volume_size" {
   description = "EBS Volume size in GiB"
   type        = number
+  default     = null
+}
+
+variable "ebs_volume_type" {
+  description = "EBS volume type. https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volume-types.html"
+  type        = string
   default     = null
 }
 
