@@ -140,6 +140,12 @@ variable "custom_endpoint_certificate_arn" {
   default     = null
 }
 
+variable "internal_user_database_enabled" {
+  description = "Enable internal user database."
+  type        = bool
+  default     = false
+}
+
 variable "master_user_arn" {
   description = "ARN of the main user."
   type        = string
