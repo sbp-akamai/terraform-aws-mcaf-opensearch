@@ -221,7 +221,7 @@ variable "saml_options_enabled" {
 variable "entity_id" {
   description = "URL of the entity id"
   type        = string
-default       = null
+  default     = null
 }
 
 variable "metadata_content" {
