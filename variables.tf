@@ -212,6 +212,24 @@ variable "cognito_role_arn" {
   default     = null
 }
 
+variable "saml_options_enabled" {
+  description = "Enable saml_options"
+  type = bool
+  default = false
+}
+
+variable "entity_id" {
+  description = "URL of the entity id"
+  type = string
+  default = null
+}
+
+variable "metadata_content" {
+  type        = string
+  description = "Contents of the saml-metadata.xml file"
+  default     = null
+}
+
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the OpenSearch cluster."
