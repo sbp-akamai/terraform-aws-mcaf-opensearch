@@ -214,14 +214,14 @@ variable "cognito_role_arn" {
 
 variable "saml_options_enabled" {
   description = "Enable saml_options"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "entity_id" {
   description = "URL of the entity id"
-  type = string
-  default = null
+  type        = string
+default       = null
 }
 
 variable "metadata_content" {
