@@ -91,3 +91,14 @@ resource "aws_elasticsearch_domain" "opensearch" {
 
   tags = var.tags
 }
+
+resource "aws_elasticsearch_domain_saml_options" "opensearch_saml_options" {
+  domain_name = var.cluster_name
+  saml_options {
+    enabled = var.saml_options_enabled
+    idp {
+      entity_id        = var.entity_id
+      metadata_content = var.metadata_content
+    }
+  }
+}
