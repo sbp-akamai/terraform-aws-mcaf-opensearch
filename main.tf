@@ -95,7 +95,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
 resource "aws_elasticsearch_domain_saml_options" "opensearch_saml_options" {
   domain_name = var.cluster_name
   saml_options {
-    enabled = var.saml_options_enabled
+    enabled          = var.saml_options_enabled
     master_user_name = var.master_user_name
     idp {
       entity_id        = var.entity_id
