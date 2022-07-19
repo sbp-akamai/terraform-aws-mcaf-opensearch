@@ -235,3 +235,9 @@ variable "tags" {
   description = "A mapping of tags to assign to the OpenSearch cluster."
   default     = {}
 }
+
+variable "master_user_name" {
+  type        = string
+  description = "This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  default     = null
+}
