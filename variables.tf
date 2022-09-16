@@ -217,14 +217,38 @@ variable "saml_options_enabled" {
   type        = bool
   default     = false
 }
-
-variable "entity_id" {
+variable "saml_options_master_backend_role" {
+  description = "(Optional) This backend role from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  type        = string
+  default     = null
+}
+variable "saml_options_master_user_name" {
+  description = "(Optional) This username from the SAML IdP receives full permissions to the cluster, equivalent to a new master user."
+  type        = string
+  default     = null
+}
+variable "saml_options_roles_key" {
+  description = "(Optional) Element of the SAML assertion to use for backend roles. Default is roles. e.g. http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
+  type        = string
+  default     = null
+}
+variable "saml_options_subject_key" {
+  description = "(Optional) Custom SAML attribute to use for user names. Default is an empty string. This will cause Elasticsearch to use the NameID element of the Subject, which is the default location for name identifiers in the SAML specification."
+  type        = string
+  default     = null
+}
+variable "saml_options_session_timeout_minutes" {
+  description = "(Optional) Duration of a session in minutes after a user logs in. Default is 60. Maximum value is 1,440."
+  type        = number
+  default     = null
+}
+variable "saml_options_idp_entity_id" {
   description = "URL of the entity id"
   type        = string
   default     = null
 }
 
-variable "metadata_content" {
+variable "saml_options_idp_metadata_content" {
   type        = string
   description = "Contents of the saml-metadata.xml file"
   default     = null

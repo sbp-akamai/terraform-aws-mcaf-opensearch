@@ -95,10 +95,15 @@ resource "aws_elasticsearch_domain" "opensearch" {
 resource "aws_elasticsearch_domain_saml_options" "opensearch_saml_options" {
   domain_name = var.cluster_name
   saml_options {
-    enabled = var.saml_options_enabled
+    enabled                 = var.saml_options_enabled
+    master_backend_role     = var.saml_options_master_backend_role
+    master_user_name        = var.saml_options_master_user_name
+    roles_key               = var.saml_options_roles_key
+    session_timeout_minutes = var.saml_options_session_timeout_minutes
+    subject_key             = var.saml_options_subject_key
     idp {
-      entity_id        = var.entity_id
-      metadata_content = var.metadata_content
+      entity_id        = var.saml_options_idp_entity_id
+      metadata_content = var.saml_options_idp_metadata_content
     }
   }
 }
