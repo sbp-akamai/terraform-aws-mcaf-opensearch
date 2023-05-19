@@ -262,26 +262,30 @@ variable "saml_options_idp_metadata_content" {
 
 variable "autotune_options" {
   type = object({
-    desired_state = bool
+    desired_state       = string
+    rollback_on_disable = string
     maintenance_schedule = object({
       cron_expression = string
       duration        = number
       start_at        = string
     })
-    rollback_on_disable = string
   })
   default = {
-    desired_state = false
+    desired_state       = "ENABLED"
+    rollback_on_disable = "NO_ROLLBACK"
     maintenance_schedule = {
       cron_expression = "value"
       duration        = 0
-      start_at        = "2000-01-01T00:00:00"
+      start_at        = "2000-01-01T00:00:00.00Z"
     }
-    rollback_on_disable = "NO_ROLLBACK"
   }
   validation {
     condition     = can(regex("^DEFAULT_ROLLBACK|NO_ROLLBACK$", var.autotune_options.rollback_on_disable))
     error_message = "Autotune rollback_on_disable should be 'DEFAULT_ROLLBACK' or 'NO_ROLLBACK'."
+  }
+  validation {
+    condition     = can(regex("^ENABLED|DISABLED$", var.autotune_options.desired_state))
+    error_message = "Autotune desired_state should be 'ENABLED' or 'DISABLED'."
   }
 }
 
