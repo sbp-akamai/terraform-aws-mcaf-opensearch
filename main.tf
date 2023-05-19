@@ -14,6 +14,10 @@ resource "aws_elasticsearch_domain" "opensearch" {
     warm_count   = var.warm_enabled ? var.warm_instance_count : null
     warm_type    = var.warm_enabled ? var.warm_instance_type : null
 
+    cold_storage_options {
+      enabled = var.cold_enabled
+    }
+
     zone_awareness_enabled = (var.availability_zones > 1) ? true : false
 
     zone_awareness_config {
@@ -87,6 +91,19 @@ resource "aws_elasticsearch_domain" "opensearch" {
     user_pool_id     = var.cognito_enabled ? var.cognito_user_pool_id : ""
     identity_pool_id = var.cognito_enabled ? var.cognito_identity_pool_id : ""
     role_arn         = var.cognito_enabled ? var.cognito_role_arn : ""
+  }
+
+  auto_tune_options {
+    desired_state       = var.autotune_options.desired_state
+    rollback_on_disable = var.autotune_options.rollback_on_disable
+    maintenance_schedule {
+      start_at = var.autotune_options.maintenance_schedule.start_at
+      duration {
+        value = var.autotune_options.maintenance_schedule.duration
+        unit  = "HOURS"
+      }
+      cron_expression_for_recurrence = var.autotune_options.maintenance_schedule.cron_expression
+    }
   }
 
   tags = var.tags

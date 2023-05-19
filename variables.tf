@@ -58,6 +58,12 @@ variable "warm_instance_count" {
   default     = 3
 }
 
+variable "cold_enabled" {
+  description = "Enable cold storage."
+  type        = bool
+  default     = false
+}
+
 variable "availability_zones" {
   description = "The number of availability zones for the OpenSearch cluster. Valid values: 1, 2 or 3."
   type        = number
@@ -252,6 +258,31 @@ variable "saml_options_idp_metadata_content" {
   type        = string
   description = "Contents of the saml-metadata.xml file"
   default     = null
+}
+
+variable "autotune_options" {
+  type = object({
+    desired_state = bool
+    maintenance_schedule = object({
+      cron_expression = string
+      duration        = number
+      start_at        = string
+    })
+    rollback_on_disable = string
+  })
+  default = {
+    desired_state = false
+    maintenance_schedule = {
+      cron_expression = "value"
+      duration        = 0
+      start_at        = "2000-01-01T00:00:00"
+    }
+    rollback_on_disable = "NO_ROLLBACK"
+  }
+  validation {
+    condition     = can(regex("^DEFAULT_ROLLBACK|NO_ROLLBACK$", var.autotune_options.rollback_on_disable))
+    error_message = "Autotune rollback_on_disable should be 'DEFAULT_ROLLBACK' or 'NO_ROLLBACK'."
+  }
 }
 
 variable "tags" {
