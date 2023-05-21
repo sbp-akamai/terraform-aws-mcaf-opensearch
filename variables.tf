@@ -152,6 +152,18 @@ variable "master_user_arn" {
   default     = null
 }
 
+variable "master_user_name" {
+  description = "Name of the main user."
+  type        = string
+  default     = null
+}
+
+variable "master_user_password" {
+  description = "Password of the main user."
+  type        = string
+  default     = null
+}
+
 variable "encrypt_kms_key_id" {
   description = "KMS key id to encrypt OpenSearch domain with."
   type        = string
