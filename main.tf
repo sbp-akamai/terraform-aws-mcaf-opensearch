@@ -54,7 +54,9 @@ resource "aws_elasticsearch_domain" "opensearch" {
     enabled                        = true
     internal_user_database_enabled = var.internal_user_database_enabled
     master_user_options {
-      master_user_arn = var.master_user_arn
+      master_user_arn      = var.internal_user_database_enabled ? var.master_user_arn : null
+      master_user_name     = var.internal_user_database_enabled ? var.master_user_name : null
+      master_user_password = var.internal_user_database_enabled ? var.master_user_password : null
     }
   }
 
@@ -95,8 +97,9 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
 
   auto_tune_options {
-    desired_state       = var.autotune_options.desired_state
-    rollback_on_disable = var.autotune_options.rollback_on_disable
+    desired_state       = var.autotune_enabled ? var.autotune_options.desired_state : "DISABLED"
+    rollback_on_disable = var.autotune_enabled ? var.autotune_options.rollback_on_disable : null
+
     maintenance_schedule {
       start_at = var.autotune_options.maintenance_schedule.start_at
       duration {
@@ -112,6 +115,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
 
 resource "aws_elasticsearch_domain_saml_options" "opensearch_saml_options" {
   domain_name = var.cluster_name
+  count       = var.saml_options_enabled ? 1 : 0
   saml_options {
     enabled                 = var.saml_options_enabled
     master_backend_role     = var.saml_options_master_backend_role

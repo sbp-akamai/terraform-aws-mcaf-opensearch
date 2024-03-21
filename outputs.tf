@@ -20,7 +20,7 @@ output "cluster_endpoint" {
 
 output "cluster_version" {
   description = "The version of the OpenSearch cluster."
-  value       = replace(aws_elasticsearch_domain.opensearch[*].elasticsearch_version, "OpenSearch_", "")
+  value       = [for i in aws_elasticsearch_domain.opensearch[*] : replace(i.elasticsearch_version, "OpenSearch_", "")]
 }
 
 output "kibana_endpoint" {

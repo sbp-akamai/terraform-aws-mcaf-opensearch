@@ -9,8 +9,10 @@ provider "elasticsearch" {
 module "opensearch" {
   source = "../"
 
+  enabled = true
+
   cluster_name    = var.cluster_name
-  cluster_version = "OpenSearch_2.11"
+  cluster_version = "OpenSearch_2.7"
 
   subnet_ids         = var.subnet_ids
   security_group_ids = var.security_group_ids
@@ -19,6 +21,8 @@ module "opensearch" {
 
   ebs_enabled     = true
   ebs_volume_size = 50
+
+  saml_options_enabled = false
 
   cloudwatch_log_enabled = true
 }

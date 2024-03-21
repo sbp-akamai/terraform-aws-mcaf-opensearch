@@ -164,6 +164,18 @@ variable "master_user_arn" {
   default     = null
 }
 
+variable "master_user_name" {
+  description = "Name of the main user."
+  type        = string
+  default     = null
+}
+
+variable "master_user_password" {
+  description = "Password of the main user."
+  type        = string
+  default     = null
+}
+
 variable "encrypt_kms_key_id" {
   description = "KMS key id to encrypt OpenSearch domain with."
   type        = string
@@ -266,6 +278,12 @@ variable "saml_options_idp_metadata_content" {
   default     = null
 }
 
+variable "autotune_enabled" {
+  type        = bool
+  description = "Enable autotune options"
+  default     = false
+}
+
 variable "autotune_options" {
   type = object({
     desired_state       = string
@@ -281,7 +299,7 @@ variable "autotune_options" {
     rollback_on_disable = "NO_ROLLBACK"
     maintenance_schedule = {
       cron_expression = "value"
-      duration        = 0
+      duration        = 1
       start_at        = "2000-01-01T00:00:00.00Z"
     }
   }
