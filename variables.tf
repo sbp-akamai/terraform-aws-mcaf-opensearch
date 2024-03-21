@@ -1,3 +1,9 @@
+variable "enabled" {
+  description = "Enable OpenSearch."
+  type        = bool
+  default     = true
+}
+
 variable "cluster_name" {
   description = "The name of the OpenSearch cluster."
   type        = string

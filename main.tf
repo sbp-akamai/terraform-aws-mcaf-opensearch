@@ -1,6 +1,7 @@
 resource "aws_elasticsearch_domain" "opensearch" {
   domain_name           = var.cluster_name
   elasticsearch_version = var.cluster_version
+  count                 = var.enabled ? 1 : 0
 
   cluster_config {
     dedicated_master_enabled = var.master_instance_count > 0
