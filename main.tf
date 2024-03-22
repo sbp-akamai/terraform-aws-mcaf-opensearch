@@ -1,6 +1,7 @@
 resource "aws_elasticsearch_domain" "opensearch" {
   domain_name           = var.cluster_name
   elasticsearch_version = var.cluster_version
+  count                 = var.enabled ? 1 : 0
 
   cluster_config {
     dedicated_master_enabled = var.master_instance_count > 0
@@ -13,6 +14,10 @@ resource "aws_elasticsearch_domain" "opensearch" {
     warm_enabled = var.warm_enabled
     warm_count   = var.warm_enabled ? var.warm_instance_count : null
     warm_type    = var.warm_enabled ? var.warm_instance_type : null
+
+    cold_storage_options {
+      enabled = var.cold_enabled
+    }
 
     zone_awareness_enabled = (var.availability_zones > 1) ? true : false
 
@@ -49,7 +54,9 @@ resource "aws_elasticsearch_domain" "opensearch" {
     enabled                        = true
     internal_user_database_enabled = var.internal_user_database_enabled
     master_user_options {
-      master_user_arn = var.master_user_arn
+      master_user_arn      = var.internal_user_database_enabled ? var.master_user_arn : null
+      master_user_name     = var.internal_user_database_enabled ? var.master_user_name : null
+      master_user_password = var.internal_user_database_enabled ? var.master_user_password : null
     }
   }
 
@@ -89,11 +96,29 @@ resource "aws_elasticsearch_domain" "opensearch" {
     role_arn         = var.cognito_enabled ? var.cognito_role_arn : ""
   }
 
+  dynamic "auto_tune_options" {
+    for_each = var.autotune_enabled ? [1] : []
+    content {
+      desired_state       = var.autotune_options.desired_state
+      rollback_on_disable = var.autotune_options.rollback_on_disable
+
+      maintenance_schedule {
+        start_at = var.autotune_options.maintenance_schedule.start_at
+        duration {
+          value = var.autotune_options.maintenance_schedule.duration
+          unit  = "HOURS"
+        }
+        cron_expression_for_recurrence = var.autotune_options.maintenance_schedule.cron_expression
+      }
+    }
+  }
+
   tags = var.tags
 }
 
 resource "aws_elasticsearch_domain_saml_options" "opensearch_saml_options" {
   domain_name = var.cluster_name
+  count       = var.saml_options_enabled ? 1 : 0
   saml_options {
     enabled                 = var.saml_options_enabled
     master_backend_role     = var.saml_options_master_backend_role

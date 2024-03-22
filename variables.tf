@@ -1,3 +1,9 @@
+variable "enabled" {
+  description = "Enable OpenSearch."
+  type        = bool
+  default     = true
+}
+
 variable "cluster_name" {
   description = "The name of the OpenSearch cluster."
   type        = string
@@ -56,6 +62,12 @@ variable "warm_instance_count" {
   description = "The number of dedicated warm nodes in the cluster."
   type        = number
   default     = 3
+}
+
+variable "cold_enabled" {
+  description = "Enable cold storage."
+  type        = bool
+  default     = false
 }
 
 variable "availability_zones" {
@@ -148,6 +160,18 @@ variable "internal_user_database_enabled" {
 
 variable "master_user_arn" {
   description = "ARN of the main user."
+  type        = string
+  default     = null
+}
+
+variable "master_user_name" {
+  description = "Name of the main user."
+  type        = string
+  default     = null
+}
+
+variable "master_user_password" {
+  description = "Password of the main user."
   type        = string
   default     = null
 }
@@ -252,6 +276,41 @@ variable "saml_options_idp_metadata_content" {
   type        = string
   description = "Contents of the saml-metadata.xml file"
   default     = null
+}
+
+variable "autotune_enabled" {
+  type        = bool
+  description = "Enable autotune options"
+  default     = false
+}
+
+variable "autotune_options" {
+  type = object({
+    desired_state       = string
+    rollback_on_disable = string
+    maintenance_schedule = object({
+      cron_expression = string
+      duration        = number
+      start_at        = string
+    })
+  })
+  default = {
+    desired_state       = "ENABLED"
+    rollback_on_disable = "NO_ROLLBACK"
+    maintenance_schedule = {
+      cron_expression = "cron(0 0 ? * 1 *)"
+      duration        = 1
+      start_at        = "2000-01-01T00:00:00.00Z"
+    }
+  }
+  validation {
+    condition     = can(regex("^DEFAULT_ROLLBACK|NO_ROLLBACK$", var.autotune_options.rollback_on_disable))
+    error_message = "Autotune rollback_on_disable should be 'DEFAULT_ROLLBACK' or 'NO_ROLLBACK'."
+  }
+  validation {
+    condition     = can(regex("^ENABLED|DISABLED$", var.autotune_options.desired_state))
+    error_message = "Autotune desired_state should be 'ENABLED' or 'DISABLED'."
+  }
 }
 
 variable "tags" {
