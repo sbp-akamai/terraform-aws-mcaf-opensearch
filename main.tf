@@ -96,17 +96,33 @@ resource "aws_elasticsearch_domain" "opensearch" {
     role_arn         = var.cognito_enabled ? var.cognito_role_arn : ""
   }
 
-  auto_tune_options {
-    desired_state       = var.autotune_enabled ? var.autotune_options.desired_state : "DISABLED"
-    rollback_on_disable = var.autotune_enabled ? var.autotune_options.rollback_on_disable : null
+  # auto_tune_options {
+  #   desired_state       = var.autotune_enabled ? var.autotune_options.desired_state : "DISABLED"
+  #   rollback_on_disable = var.autotune_enabled ? var.autotune_options.rollback_on_disable : null
+  #
+  #   maintenance_schedule {
+  #     start_at = var.autotune_options.maintenance_schedule.start_at
+  #     duration {
+  #       value = var.autotune_options.maintenance_schedule.duration
+  #       unit  = "HOURS"
+  #     }
+  #     cron_expression_for_recurrence = var.autotune_options.maintenance_schedule.cron_expression
+  #   }
+  # }
+  dynamic "auto_tune_options" {
+    for_each = var.autotune_enabled ? [1] : []
+    content {
+      desired_state       = var.autotune_options.desired_state
+      rollback_on_disable = var.autotune_options.rollback_on_disable
 
-    maintenance_schedule {
-      start_at = var.autotune_options.maintenance_schedule.start_at
-      duration {
-        value = var.autotune_options.maintenance_schedule.duration
-        unit  = "HOURS"
+      maintenance_schedule {
+        start_at = var.autotune_options.maintenance_schedule.start_at
+        duration {
+          value = var.autotune_options.maintenance_schedule.duration
+          unit  = "HOURS"
+        }
+        cron_expression_for_recurrence = var.autotune_options.maintenance_schedule.cron_expression
       }
-      cron_expression_for_recurrence = var.autotune_options.maintenance_schedule.cron_expression
     }
   }
 

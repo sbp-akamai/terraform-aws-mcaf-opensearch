@@ -298,7 +298,7 @@ variable "autotune_options" {
     desired_state       = "ENABLED"
     rollback_on_disable = "NO_ROLLBACK"
     maintenance_schedule = {
-      cron_expression = "value"
+      cron_expression = "cron(0 0 ? * 1 *)"
       duration        = 1
       start_at        = "2000-01-01T00:00:00.00Z"
     }
