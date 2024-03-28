@@ -155,7 +155,7 @@ variable "custom_endpoint_certificate_arn" {
 variable "internal_user_database_enabled" {
   description = "Enable internal user database."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "master_user_arn" {

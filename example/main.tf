@@ -14,7 +14,8 @@ module "opensearch" {
   cluster_name    = var.cluster_name
   cluster_version = "OpenSearch_2.7"
 
-  subnet_ids         = var.subnet_ids
+  subnet_ids = var.subnet_ids
+  #checkov:skip=CKV_AWS_248:This example doesn't contain a security group
   security_group_ids = var.security_group_ids
 
   warm_enabled = false

@@ -4,7 +4,7 @@ resource "aws_elasticsearch_domain" "opensearch" {
   count                 = var.enabled ? 1 : 0
 
   cluster_config {
-    dedicated_master_enabled = var.master_instance_count > 0
+    dedicated_master_enabled = true
     dedicated_master_count   = var.master_instance_count
     dedicated_master_type    = var.master_instance_type
 
