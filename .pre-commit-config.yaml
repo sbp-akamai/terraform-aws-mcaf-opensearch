@@ -1,7 +1,34 @@
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-json
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: pretty-format-json
+        args:
+          - --autofix
+      - id: detect-aws-credentials
+        args:
+          - --allow-missing-credentials
+      - id: detect-private-key
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.77.0
+    rev: v1.88.4
     hooks:
       - id: terraform_fmt
       - id: terraform_docs
+        args:
+          - --hook-config=--use-standard-markers=true
       - id: terraform_validate
+      - id: terraform_trivy
+  - repo: https://github.com/bridgecrewio/checkov
+    rev: 3.0.37
+    hooks:
+      - id: checkov
+        verbose: false
+        args: [--download-external-modules, "true", --quiet, --compact]
+        additional_dependencies:
+          - "cyclonedx-python-lib==5.2.0"
