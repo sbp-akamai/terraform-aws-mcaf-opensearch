@@ -23,7 +23,6 @@ repos:
         args:
           - --hook-config=--use-standard-markers=true
       - id: terraform_validate
-      - id: terraform_trivy
   - repo: https://github.com/bridgecrewio/checkov
     rev: 3.0.37
     hooks:
