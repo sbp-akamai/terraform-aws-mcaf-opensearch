@@ -1,18 +1,16 @@
-# terraform-aws-mcaf-opensearch
-<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.0.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | 5.49.0 |
 | <a name="requirement_elasticsearch"></a> [elasticsearch](#requirement\_elasticsearch) | >= 2.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.42.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.49.0 |
 
 ## Modules
 
@@ -22,14 +20,14 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_cloudwatch_log_group.cw_application](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
-| [aws_cloudwatch_log_group.cw_audit](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
-| [aws_cloudwatch_log_group.cw_index](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
-| [aws_cloudwatch_log_group.cw_search](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group) | resource |
-| [aws_cloudwatch_log_resource_policy.cw_resource_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_resource_policy) | resource |
-| [aws_elasticsearch_domain.opensearch](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain) | resource |
-| [aws_elasticsearch_domain_saml_options.opensearch_saml_options](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain_saml_options) | resource |
-| [aws_iam_policy_document.cw_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_cloudwatch_log_group.cw_application](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/resources/cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_group.cw_audit](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/resources/cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_group.cw_index](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/resources/cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_group.cw_search](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/resources/cloudwatch_log_group) | resource |
+| [aws_cloudwatch_log_resource_policy.cw_resource_policy](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/resources/cloudwatch_log_resource_policy) | resource |
+| [aws_elasticsearch_domain.opensearch](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/resources/elasticsearch_domain) | resource |
+| [aws_elasticsearch_domain_saml_options.opensearch_saml_options](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/resources/elasticsearch_domain_saml_options) | resource |
+| [aws_iam_policy_document.cw_policy](https://registry.terraform.io/providers/hashicorp/aws/5.49.0/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
 
@@ -96,4 +94,3 @@ No modules.
 | <a name="output_kibana_endpoint"></a> [kibana\_endpoint](#output\_kibana\_endpoint) | The endpoint URL of Kibana. |
 | <a name="output_opensearch_domain_arn"></a> [opensearch\_domain\_arn](#output\_opensearch\_domain\_arn) | Return ARN of the OpenSearch cluster domain. |
 | <a name="output_opensearch_domain_id"></a> [opensearch\_domain\_id](#output\_opensearch\_domain\_id) | The domain id of the OpenSearch cluster. |
-<!-- END_TF_DOCS -->
