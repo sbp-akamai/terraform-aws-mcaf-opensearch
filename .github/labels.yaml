@@ -1,0 +1,25 @@
+---
+- name: bug
+  color: "c2e0c6"
+  description: Bug
+- name: do-not-merge
+  color: "e99695"
+  description: Do not merge commit
+- name: documentation
+  color: "feaef7"
+  description: Documentation
+- name: enhancement
+  color: "8d6fc8"
+  description: Enhancement
+- name: release/major
+  color: "d93f0b"
+  description: Major version
+- name: release/minor
+  color: "fbca04"
+  description: Minor version
+- name: release/patch
+  color: "0e8a16"
+  description: Patch version
+- name: security
+  color: "db175c"
+  description: Security
