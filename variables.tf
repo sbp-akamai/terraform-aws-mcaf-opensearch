@@ -129,8 +129,8 @@ variable "tls_security_policy" {
   default     = "Policy-Min-TLS-1-2-2019-07"
 
   validation {
-    condition     = can(regex("^Policy-Min-TLS-1-0-2019-07|Policy-Min-TLS-1-2-2019-07$", var.tls_security_policy))
-    error_message = "TLS security policy should be 'Policy-Min-TLS-1-0-2019-07' or 'Policy-Min-TLS-1-2-2019-07'."
+    condition     = can(regex("^Policy-Min-TLS-1-0-2019-07|Policy-Min-TLS-1-2-2019-07|Policy-Min-TLS-1-2-PFS-2023-10$", var.tls_security_policy))
+    error_message = "TLS security policy should be 'Policy-Min-TLS-1-0-2019-07, Policy-Min-TLS-1-2-2019-07, Policy-Min-TLS-1-2-PFS-2023-10'."
   }
 }
 
