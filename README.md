@@ -58,7 +58,7 @@ No modules.
 | <a name="input_encrypt_at_rest"></a> [encrypt\_at\_rest](#input\_encrypt\_at\_rest) | Enable encryption at rest | `bool` | `true` | no |
 | <a name="input_encrypt_kms_key_id"></a> [encrypt\_kms\_key\_id](#input\_encrypt\_kms\_key\_id) | KMS key id to encrypt OpenSearch domain with. | `string` | `null` | no |
 | <a name="input_enforce_https"></a> [enforce\_https](#input\_enforce\_https) | Enforce HTTPS domain endpoint. | `string` | `null` | no |
-| <a name="input_hot_instance_count"></a> [hot\_instance\_count](#input\_hot\_instance\_count) | The number of dedicated hot nodes in the cluster. | `number` | `3` | no |
+| <a name="input_hot_instance_count"></a> [hot\_instance\_count](#input\_hot\_instance\_count) | The number of dedicated hot nodes at creation. Later changes are ignored; the live count is managed outside Terraform. | `number` | `3` | no |
 | <a name="input_hot_instance_type"></a> [hot\_instance\_type](#input\_hot\_instance\_type) | The instance type for dedicated hot nodes in the cluster. | `string` | `"t3.small.elasticsearch"` | no |
 | <a name="input_internal_user_database_enabled"></a> [internal\_user\_database\_enabled](#input\_internal\_user\_database\_enabled) | Enable internal user database. | `bool` | `true` | no |
 | <a name="input_master_instance_count"></a> [master\_instance\_count](#input\_master\_instance\_count) | The number of dedicated master nodes in the cluster. | `number` | `3` | no |
