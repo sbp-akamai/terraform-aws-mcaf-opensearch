@@ -35,7 +35,7 @@ variable "master_instance_type" {
 }
 
 variable "hot_instance_count" {
-  description = "The number of dedicated hot nodes in the cluster."
+  description = "The number of dedicated hot nodes at creation. Later changes are ignored; the live count is managed outside Terraform."
   type        = number
   default     = 3
 }

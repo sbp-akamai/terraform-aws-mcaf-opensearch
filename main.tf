@@ -114,6 +114,12 @@ resource "aws_elasticsearch_domain" "opensearch" {
   }
 
   tags = var.tags
+
+  # The live hot node count is owned by an out-of-band autoscaler;
+  # hot_instance_count only sets the count at creation.
+  lifecycle {
+    ignore_changes = [cluster_config[0].instance_count]
+  }
 }
 
 resource "aws_elasticsearch_domain_saml_options" "opensearch_saml_options" {
