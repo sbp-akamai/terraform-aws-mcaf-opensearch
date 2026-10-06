@@ -52,6 +52,18 @@ variable "warm_enabled" {
   default     = false
 }
 
+variable "coordinator_instance_count" {
+  description = "Number of dedicated coordinator nodes; 0 leaves coordinator nodes unmanaged."
+  type        = number
+  default     = 0
+}
+
+variable "coordinator_instance_type" {
+  description = "Instance type for the dedicated coordinator nodes."
+  type        = string
+  default     = null
+}
+
 variable "warm_instance_type" {
   description = "The type of EC2 instances to run for each warm node."
   type        = string
