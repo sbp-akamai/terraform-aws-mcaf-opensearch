@@ -146,9 +146,13 @@ resource "aws_opensearch_domain" "opensearch" {
   tags = var.tags
 
   # The live hot node count is owned by an out-of-band autoscaler;
-  # hot_instance_count only sets the count at creation.
+  # hot_instance_count only sets the count at creation. The master user is
+  # only applied at creation and is not returned by AWS on read.
   lifecycle {
-    ignore_changes = [cluster_config[0].instance_count]
+    ignore_changes = [
+      cluster_config[0].instance_count,
+      advanced_security_options[0].master_user_options,
+    ]
   }
 }
 
