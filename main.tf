@@ -1,19 +1,49 @@
-resource "aws_elasticsearch_domain" "opensearch" {
-  domain_name           = var.cluster_name
-  elasticsearch_version = var.cluster_version
-  count                 = var.enabled ? 1 : 0
+locals {
+  # aws_opensearch_domain uses the ".search" instance type suffix.
+  master_instance_type = replace(var.master_instance_type, ".elasticsearch", ".search")
+  hot_instance_type    = replace(var.hot_instance_type, ".elasticsearch", ".search")
+  warm_instance_type   = replace(var.warm_instance_type, ".elasticsearch", ".search")
+}
+
+# v2.0.0 moved the domain from aws_elasticsearch_domain to aws_opensearch_domain.
+# Callers import the existing domain once (see README); the old resource is
+# forgotten without destroying it.
+removed {
+  from = aws_elasticsearch_domain.opensearch
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+resource "aws_opensearch_domain" "opensearch" {
+  domain_name    = var.cluster_name
+  engine_version = var.cluster_version
+  count          = var.enabled ? 1 : 0
 
   cluster_config {
     dedicated_master_enabled = true
     dedicated_master_count   = var.master_instance_count
-    dedicated_master_type    = var.master_instance_type
+    dedicated_master_type    = local.master_instance_type
 
     instance_count = var.hot_instance_count
-    instance_type  = var.hot_instance_type
+    instance_type  = local.hot_instance_type
 
     warm_enabled = var.warm_enabled
     warm_count   = var.warm_enabled ? var.warm_instance_count : null
-    warm_type    = var.warm_enabled ? var.warm_instance_type : null
+    warm_type    = var.warm_enabled ? local.warm_instance_type : null
+
+    dynamic "node_options" {
+      for_each = var.coordinator_instance_count > 0 ? [1] : []
+      content {
+        node_type = "coordinator"
+        node_config {
+          enabled = true
+          type    = replace(var.coordinator_instance_type, ".elasticsearch", ".search")
+          count   = var.coordinator_instance_count
+        }
+      }
+    }
 
     cold_storage_options {
       enabled = var.cold_enabled
@@ -116,9 +146,13 @@ resource "aws_elasticsearch_domain" "opensearch" {
   tags = var.tags
 
   # The live hot node count is owned by an out-of-band autoscaler;
-  # hot_instance_count only sets the count at creation.
+  # hot_instance_count only sets the count at creation. The master user is
+  # only applied at creation and is not returned by AWS on read.
   lifecycle {
-    ignore_changes = [cluster_config[0].instance_count]
+    ignore_changes = [
+      cluster_config[0].instance_count,
+      advanced_security_options[0].master_user_options,
+    ]
   }
 }
 

@@ -1,3 +1,16 @@
+## Upgrading to v2.0.0
+
+The domain is now an `aws_opensearch_domain` (needed for coordinator nodes); the old `aws_elasticsearch_domain` is removed from state without destroying it. Import the existing domain once in the calling root module, and check that the plan shows the import and no replacement:
+
+```hcl
+import {
+  to = module.opensearch.aws_opensearch_domain.opensearch[0]
+  id = "<domain name>"
+}
+```
+
+Requires Terraform >= 1.7. `kibana_endpoint` now returns the dashboard endpoint. Instance types may use either the `.elasticsearch` or `.search` suffix.
+
 ## Requirements
 
 | Name | Version |
